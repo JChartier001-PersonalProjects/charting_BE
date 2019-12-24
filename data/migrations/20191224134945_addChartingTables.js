@@ -1,106 +1,448 @@
 
 exports.up = function(knex) {
     return knex.schema
+    .createTable('user', tbl => {
+        tbl.increments();
+        tbl.string('username')
+            .unique()
+            .notNullable();
+        tbl.string('password', 128)
+            .notNullable();
+    })
     .createTable(
         'patients', tbl => {
             tbl.increments('id');
-            tbl.string('firstName')
-            .notNullable();
-            tbl.string('lastName')
-            .notNullable();
+            tbl.string('first_name')
+                .notNullable();
+            tbl.string('last_name')
+                .notNullable();
             tbl.string('address')
-            .notNullable();
+                .notNullable();
             tbl.string('city')
-            .notNullable();
+                .notNullable();
             tbl.string('state')
-            .notNullable();
-            tbl.integer('zipCode', 5)
-            .notNullable();
-            tbl.integer('phoneNumber', 10)
-            .notNullable();
+                .notNullable();
+            tbl.integer('zip_code', 5)
+                .notNullable();
+            tbl.integer('phone_number', 10)
+                .notNullable();           
             tbl.date("d_o_b")
-            .notNullable();
+                .notNullable();
             tbl.boolean('code')
-            .notNullable()
+                .notNullable()
+            tbl.integer('user_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('user')
+                .onDelete('RESTRICT')
+                .onUpdate('CASCADE');
         })
-        .createTable('allergy', tbl => {
-            tbl.increments();
-            tbl.string('allergy')
+    .createTable('allergy', tbl => {
+        tbl.increments();
+        tbl.string('allergy')
             .notNullable();
-            tbl.string('reaction')
+        tbl.string('reaction')
             .notNullable();
-            tbl.integer('pt_id')
+        tbl.integer('pt_id')
             .unsigned()
             .notNullable()
             .references('id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
-        })
-        .createTable('emer_contact', tbl => {
-            tbl.increments();
-            tbl.string('firstName')
+    })
+    .createTable('emer_contact', tbl => {
+        tbl.increments();
+        tbl.string('first_name')
             .notNullable();
-            tbl.string('lastName')
+        tbl.string('last_name')
             .notNullable();
-            tbl.string('address')
+        tbl.string('address')
             .notNullable();
-            tbl.string('city')
+        tbl.string('city')
             .notNullable();
-            tbl.string('state')
+        tbl.string('state')
             .notNullable();
-            tbl.integer('zipCode', 5)
+        tbl.integer('zip_code', 5)
             .notNullable();
-            tbl.integer('phoneNumber', 10)
-            .notNullable();
-            tbl.string('email')
+        tbl.integer('phone_number', 10)
+            .notNullable();           
+        tbl.string('email')
             .unique();
-            tbl.integer('pt_id')
+        tbl.integer('pt_id')
             .unsigned()
             .notNullable()
             .references('id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
-        })
-        .createTable('doctor', tbl => {
-            tbl.increments();
-            tbl.string('firstName')
+    })
+    .createTable('doctor', tbl => {
+        tbl.increments();
+        tbl.string('first_name')
             .notNullable();
-            tbl.string('lastName')
+        tbl.string('last_name')
             .notNullable();
-            tbl.string('address')
+        tbl.string('address')
             .notNullable();
-            tbl.string('city')
+        tbl.string('city')
             .notNullable();
-            tbl.string('state')
+        tbl.string('state')
             .notNullable();
-            tbl.integer('zipCode', 5)
+        tbl.integer('zip_code', 5)
             .notNullable();
-            tbl.integer('phoneNumber', 10)
+        tbl.integer('phone_number', 10)
+            .notNullable();           
+        tbl.integer('fax_number', 10)
             .notNullable();
-            tbl.integer('faxNumber', 10)
-            .notNullable();
-            tbl.string('email')
+        tbl.string('email')
             .unique();
-            tbl.integer('pt_id')
+        tbl.integer('pt_id')
             .unsigned()
             .notNullable()
             .references('id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
+    })
+    .createTable('nurse', tbl => {
+        tbl.integer();
+        tbl.string('first_name')
+            .notNullable();
+        tbl.string('last_name')
+            .notNullable();
+        tbl.string('address')
+            .notNullable();
+        tbl.string('city')
+            .notNullable();
+        tbl.string('state')
+            .notNullable();
+        tbl.integer('zip_code', 5)
+            .notNullable();
+        tbl.integer('phone_number', 10)
+            .notNullable();           
+        tbl.string('email')
+            .unique();
+        tbl.integer('npi_number')
+            .unique()
+            .notNullable();
+        tbl.string('role')
+            .notNullable();
+        tbl.boolean('rsc');
+        tbl.boolean('tos')
+            .notNullable();
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
+        tbl.integer('user_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('user')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');            
+    })
+    .createTable('med_order', tbl => {
+        tbl.increments();
+        tbl.string('med_name')
+            .notNullable();
+        tbl.string('route')
+            .notNullable();
+        tbl.string('dose')
+            .notNullable();
+        tbl.string('time_sched')
+            .notNullable();
+        tbl.string('duration')
+            .notNullable();
+        tbl.integer('doc_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('doctor')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE'); 
+    })
+
+    .createTable('med_record', tbl => {
+        tbl.increments();
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
+        tbl.integer('med_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('med_order')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
+        tbl.boolean('med_given');
+        tbl.timestamp('time_given')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');        
+    })
+    .createTable('adls', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.string('bathing');
+        tbl.string('oral_care');
+        tbl.string('trach_care');
+        tbl.string('gt_care');
+        tbl.string('ambulation');
+        tbl.string('amb_distance');
+        tbl.string('shaved');
+        tbl.string('nail_care');
+        tbl.string('dressing');
+        tbl.string('position');
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE'); 
+    })
+    .createTable('assessments', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.boolean('neuro')
+            .notNullable();
+        tbl.boolean('cardiac')
+            .notNullable();
+        tbl.boolean('respiratory')
+            .notNullable();
+        tbl.boolean('GI')
+            .notNullable();
+        tbl.boolean('GU')
+            .notNullable();
+        tbl.boolean('HEENT')
+            .notNullable();
+        tbl.boolean('skin')
+            .notNullable();
+        tbl.string('notes');
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE'); 
+    })
+    .createTable('nutrition', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.string('type')
+            .notNullable();
+        tbl.string('fluid_in');
+        tbl.string('meal_per');
+        tbl.string('tf_rate');
+        tbl.string('tf_amount');
+        tbl.string('notes');
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE'); 
         })
-            
-        })
-};
+    .createTable('void', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.boolean("continence")
+            .notNullable();
+        tbl.string('occurence');
+        tbl.string('amount');
+        tbl.string('color')
+            .notNullable();
+        tbl.string('odor')
+            .notNullable();
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');                 
+    })
+    .createTable('bm', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.boolean("continence")
+            .notNullable();                
+        tbl.string('amount');
+        tbl.string('color')
+            .notNullable();
+        tbl.string('consistency')
+            .notNullable();
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');                 
+    })
+    .createTable('vitals', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE'); 
+        tbl.string('bp');
+        tbl.string('hr');
+        tbl.string('temp');
+        tbl.string('o2');
+        tbl.string('pain');
+        tbl.string('notes');
+    })
+    .createTable('suction', tbl => {
+        tbl.increments();
+        tbl.timestamp('time_done')
+            .defaultTo(knex.fn.now())
+            .notNullable();
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
+        tbl.string('location')
+            .notNullable();
+        tbl.string('amount')
+            .notNullable();
+        tbl.string('consistency')
+            .notNullable();
+        tbl.string('color')
+            .notNullable();
+        tbl.string('odor')
+            .notNullable();
+    })
+    .createTable('icd_10', tbl => {
+        tbl.integer('code')
+        .unique()
+        .notNullable();
+        tbl.string('name');
+    })
+    .createTable('diagnosis', tbl => {
+        tbl.increments();
+        tbl.integer('icd_code')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('ice_10')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
+        tbl.integer('pt_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            .inTable('patient')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
+        tbl.boolean('primary');        
+    })            
+    };
+
 
 exports.down = function(knex) {
-  return knex.schema.dropIfTableExists('')
-  .dropIfTableExists('')
+  return knex.schema.dropIfTableExists('diagnosis')
+  .dropIfTableExists('icd_10')
+  .dropIfTableExists('suction')
+  .dropIfTableExists('vitals')
+  .dropIfTableExists('bm')
+  .dropIfTableExists('void')
+  .dropIfTableExists('nutrition')
+  .dropIfTableExists('assessments')
+  .dropIfTableExists('adls')
+  .dropIfTableExists('med_record')
+  .dropIfTableExists('med_order')
+  .dropIfTableExists('nurse')
   .dropIfTableExists('doctor')
   .dropIfTableExists('emer_contact')
   .dropIfTableExists('allergy')
   .dropIfTableExists('patient')
+  .dropIfTableExists('user')
  
 };
