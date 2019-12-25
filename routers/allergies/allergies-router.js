@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const Allergy = require('./allergies-model.js')
-const restricted = require('../auth/auth-middleware.js');
+const restricted = require('../../auth/auth-middleware.js');
 
 router.get('/allergy', restricted, (req, res) => {
     Allergy.find()
@@ -14,7 +14,7 @@ router.get('/allergy', restricted, (req, res) => {
     });
 });
 
-router.get('/allergy', restricted, (req, res) => {
+router.get('/allergy/:id', restricted, (req, res) => {
     Allergy.findById(id)
     .then(allergy => {
         res.json(allergy);
