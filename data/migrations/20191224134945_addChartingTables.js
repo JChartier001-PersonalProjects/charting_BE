@@ -10,8 +10,10 @@ exports.up = function(knex) {
             .notNullable();
     })
     .createTable(
-        'patients', tbl => {
-            tbl.increments('id');
+        'patient', tbl => {
+            tbl.integer('med_id')
+                .unique()
+                .notNullable();
             tbl.string('first_name')
                 .notNullable();
             tbl.string('last_name')
@@ -47,7 +49,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -73,7 +75,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -101,7 +103,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -135,7 +137,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -173,7 +175,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -221,7 +223,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE'); 
@@ -256,7 +258,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE'); 
@@ -283,7 +285,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE'); 
@@ -311,7 +313,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');                 
@@ -338,7 +340,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');                 
@@ -358,7 +360,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE'); 
@@ -384,7 +386,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -417,7 +419,7 @@ exports.up = function(knex) {
         tbl.integer('pt_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('mem_id')
             .inTable('patient')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
