@@ -15,6 +15,7 @@ router.get('/allergy', restricted, (req, res) => {
 });
 
 router.get('/allergy/:id', restricted, (req, res) => {
+    const id = req.params.id
     Allergy.findById(id)
     .then(allergy => {
         res.json(allergy);
@@ -25,7 +26,9 @@ router.get('/allergy/:id', restricted, (req, res) => {
     });
 });
 
-router.put('/allergy/:id', (req, res) => {
+router.put('/allergy/:id', restricted, (req, res) => {
+    const id = req.params.id;
+    const changes = req.body
     Allergy.update(id, changes)
     .then(allergy => {
         res.status(200).json(allergy)
@@ -36,7 +39,8 @@ router.put('/allergy/:id', (req, res) => {
     });
 });
 
-router.get('/allergy', (req, res) => {
+router.get('/allergy', restricted, (req, res) => {
+    const allergy = req.body
     Allergy.findBy(allergy)
     .then(allergy => {
         res.status(200).json(allergy)
@@ -47,7 +51,8 @@ router.get('/allergy', (req, res) => {
     })
 })
 
-router.post('/allergy', (req, res) => {
+router.post('/allergy', restricted, (req, res) => {
+    const allergy = req.body
     Allergy.add(allergy)
     .then(allergy => {
         res.status(201).json(allergy)

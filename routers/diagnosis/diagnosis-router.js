@@ -15,6 +15,7 @@ router.get('/diagnosis', restricted, (req, res) => {
 });
 
 router.get('/diagnosis/:id', restricted, (req, res) => {
+    const id = req.params.id;
     diagnosis.findById(id)
     .then(diagnosis => {
         res.json(diagnosis);
@@ -26,6 +27,8 @@ router.get('/diagnosis/:id', restricted, (req, res) => {
 });
 
 router.put('/diagnosis/:id', restricted, (req, res) => {
+    const id = req.params.id;
+    const changes = req.body;
     diagnosis.update(id, changes)
     .then(diagnosis => {
         res.status(200).json(diagnosis)
@@ -36,7 +39,8 @@ router.put('/diagnosis/:id', restricted, (req, res) => {
     });
 });
 
-router.get('/diagnosis', (req, res) => {
+router.get('/diagnosis', restricted, (req, res) => {
+    const diagnosis = req.body;
     diagnosis.findBy(diagnosis)
     .then(diagnosis => {
         res.status(200).json(diagnosis)
@@ -47,7 +51,8 @@ router.get('/diagnosis', (req, res) => {
     })
 })
 
-router.post('/diagnosis', (req, res) => {
+router.post('/diagnosis', restricted, (req, res) => {
+    const diagnosis = req.body;
     diagnosis.add(diagnosis)
     .then(diagnosis => {
         res.status(201).json(diagnosis)
