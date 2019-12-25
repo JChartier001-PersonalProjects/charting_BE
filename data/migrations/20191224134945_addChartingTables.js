@@ -109,7 +109,10 @@ exports.up = function(knex) {
             .onUpdate('CASCADE');
     })
     .createTable('nurse', tbl => {
-        tbl.integer();
+        tbl.integer('npi_number')
+            .primary()
+            .unique()
+            .notNullable();
         tbl.string('first_name')
             .notNullable();
         tbl.string('last_name')
@@ -125,10 +128,7 @@ exports.up = function(knex) {
         tbl.integer('phone_number', 10)
             .notNullable();           
         tbl.string('email')
-            .unique();
-        tbl.integer('npi_number')
-            .unique()
-            .notNullable();
+            .unique();       
         tbl.string('role')
             .notNullable();
         tbl.boolean('rsc');
@@ -168,6 +168,13 @@ exports.up = function(knex) {
             .inTable('doctor')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE'); 
+        tbl.integer('nurse_id')
+            .unsigned()
+            .notNullable()
+            .references('npi_number')
+            .inTable('nurse')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');  
     })
 
     .createTable('med_record', tbl => {
@@ -193,7 +200,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');        
@@ -216,7 +223,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
@@ -251,7 +258,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
@@ -278,7 +285,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
@@ -306,7 +313,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
@@ -333,7 +340,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
@@ -353,7 +360,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
@@ -379,7 +386,7 @@ exports.up = function(knex) {
         tbl.integer('nurse_id')
             .unsigned()
             .notNullable()
-            .references('id')
+            .references('npi_number')
             .inTable('nurse')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');  
