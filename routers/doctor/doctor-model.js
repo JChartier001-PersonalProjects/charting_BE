@@ -9,32 +9,32 @@ module.exports = {
 };
 
 function find() {
-    return db('user').select('id', 'username', 'password');
+    return db('doctor');
 }
 
 function findById(id) {
-    return db('user')
+    return db('doctor')
     .where({id})
     .first();
 }
 
-async function add(user) {
-    return db('user')
-    .insert(user)
+async function add(doctor) {
+    return db('doctor')
+    .insert(doctor)
     .returning('id');
     
 }
 
 function findBy(filter) {
-    return db('user').where(filter);
+    return db('doctor').where(filter);
   }
 
 function update(id, changes){
-return db('user')
+return db('doctor')
     .where({id})
     .update(changes, "id")
     .then(id => {
-        return db('user')
+        return db('doctor')
             .where({id})
             .first()
     })
