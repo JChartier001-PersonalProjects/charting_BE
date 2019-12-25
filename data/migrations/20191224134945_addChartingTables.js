@@ -228,7 +228,7 @@ exports.up = function(knex) {
             .onDelete('RESTRICT')
             .onUpdate('CASCADE'); 
     })
-    .createTable('assessments', tbl => {
+    .createTable('assessment', tbl => {
         tbl.increments();
         tbl.timestamp('time_done')
             .defaultTo(knex.fn.now())
