@@ -3,7 +3,7 @@ exports.up = function(knex) {
     return knex.schema
     .createTable('user', tbl => {
         tbl.increments();
-        tbl.string('username')
+        tbl.string('email')
             .unique()
             .notNullable();
         tbl.string('password', 128)
@@ -436,22 +436,22 @@ exports.up = function(knex) {
 
 
 exports.down = function(knex) {
-  return knex.schema.dropIfTableExists('diagnosis')
-  .dropIfTableExists('icd_10')
-  .dropIfTableExists('suction')
-  .dropIfTableExists('vitals')
-  .dropIfTableExists('bm')
-  .dropIfTableExists('void')
-  .dropIfTableExists('nutrition')
-  .dropIfTableExists('assessments')
-  .dropIfTableExists('adls')
-  .dropIfTableExists('med_record')
-  .dropIfTableExists('med_order')
-  .dropIfTableExists('nurse')
-  .dropIfTableExists('doctor')
-  .dropIfTableExists('emer_contact')
-  .dropIfTableExists('allergy')
-  .dropIfTableExists('patient')
-  .dropIfTableExists('user')
+  return knex.schema.dropTableIfExists('diagnosis')
+  .dropTableIfExists('icd_10')
+  .dropTableIfExists('suction')
+  .dropTableIfExists('vitals')
+  .dropTableIfExists('bm')
+  .dropTableIfExists('void')
+  .dropTableIfExists('nutrition')
+  .dropTableIfExists('assessment')
+  .dropTableIfExists('adls')
+  .dropTableIfExists('med_record')
+  .dropTableIfExists('med_order')
+  .dropTableIfExists('nurse')
+  .dropTableIfExists('doctor')
+  .dropTableIfExists('emer_contact')
+  .dropTableIfExists('allergy')
+  .dropTableIfExists('patient')
+  .dropTableIfExists('user')
  
 };
