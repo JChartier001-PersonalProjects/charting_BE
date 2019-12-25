@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function find() {
-    return db('user').select('id', 'username', 'password');
+    return db('user').select('id', 'email', 'password');
 }
 
 function findById(id) {
@@ -21,8 +21,9 @@ function findById(id) {
 async function add(user) {
     return db('user')
     .insert(user)
-    .returning('id');
-    
+    .then(id => {
+        return findById(id);    
+})
 }
 
 function findBy(filter) {
