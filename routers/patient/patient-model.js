@@ -21,8 +21,9 @@ function findById(id) {
 async function add(patient) {
     return db('patient')
     .insert(patient)
-    .returning('id');
-    
+    .then(id => {
+        return findById(id);    
+})
 }
 
 function findBy(filter) {

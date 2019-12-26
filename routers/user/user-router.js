@@ -14,6 +14,18 @@ router.get('/', restricted, (req, res) => {
     });
 });
 
+router.get('/search', restricted, (req, res) => {
+    const filter = req.body;
+    User.findBy(filter)
+    .then(user => {
+        res.json(user);
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json(error);
+    });
+});
+
 router.get('/', restricted, (req, res) => {
     User.findById(id)
     .then(user => {
@@ -26,8 +38,11 @@ router.get('/', restricted, (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    user.update(id, changes)
+    const id = req.params.id;
+    const changes = req.body;
+    User.update(id, changes)
     .then(user => {
+        console.log(user);
         res.status(200).json(user)
     })
     .catch(error => {

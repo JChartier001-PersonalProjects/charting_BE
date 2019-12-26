@@ -4,7 +4,8 @@ const helmet = require('helmet');
 
 const authRouter = require('../auth/auth-router.js');
 const authenticate = require('../auth/auth-middleware.js');
-const userRouter = require('../routers/user/user-router.js')
+const userRouter = require('../routers/user/user-router.js');
+const patientRouter = require('../routers/patient/patient-router.js')
 
 
 const server = express();
@@ -15,7 +16,8 @@ server.use(cors());
 
 
 server.use('/api/auth', authRouter);
-server.use('/api', authenticate, userRouter)
+server.use('/api', authenticate, userRouter, patientRouter);
+// server.use('/api/patient', patientRouter);
 
 server.get("/", (req, res) => {
     res.status(200).json({ api: "up", dbenv: process.env.DB_ENV });

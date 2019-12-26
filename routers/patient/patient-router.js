@@ -39,10 +39,11 @@ router.put('/patient/:id', restricted, (req, res) => {
     });
 });
 
-router.get('/patient', restricted, (req, res) => {
+router.get('/patient/search', restricted, (req, res) => {
     const filter = req.body
     patient.findBy(filter)
     .then(patient => {
+        console.log(patient)
         res.status(200).json(patient)
     })
     .catch(error => {
@@ -55,6 +56,7 @@ router.post('/patient', restricted, (req, res) => {
     const info = req.body;
     patient.add(info)
     .then(patientInfo => {
+        console.log(patientInfo);
         res.status(201).json(patientInfo)
     })
     .catch(error => {

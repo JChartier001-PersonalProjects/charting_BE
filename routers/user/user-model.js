@@ -27,16 +27,18 @@ async function add(user) {
 }
 
 function findBy(filter) {
+    
     return db('user').where(filter);
   }
 
 function update(id, changes){
+    
 return db('user')
     .where({id})
     .update(changes, "id")
-    .then(id => {
+    .then(() => {
         return db('user')
-            .where({id})
-            .first()
-    })
-}
+        .where({id})
+        .first()    
+    });
+    }
